@@ -1,0 +1,81 @@
+\chapter{Appendix I}
+\label{cha:AppendixI}
+%\addcontentsline{toc}{chapter}{\quad\,\,{Appendix I}}
+\begin{singlespacing}
+
+\section{Steps involved in the HMM analysis}
+\begin{enumerate}[label=Step \arabic*., align=left, leftmargin=*]
+
+\item Built the HMM models for the branching ACPs (38 seq; wacp.hmm) and non-branching ACPs (178 seq; stdacp.hmm) using the sequences provided by Dr. Anthony Haines.
+\item Searched, scored and plotted the HMMs against the sequences used for model building of both the models, to identify the respective clusters.
+\item Searched, scored and plot the HMMs against the test sequences (provided by Dr. Anthony Haines) for both the models, to confirm the selectivity of the models and clustering.
+\item Fetched the sequences using stdACP hmm from Refseq microbial (6408654 seq) and Uniprot Trembl (20127441 seq) database. 
+\item Used Perl scripts (Script \ref{sec: RefSeqExtract} and Script \ref{sec: TrEMBLExtract}) to read the hmmsearch (a tool in HMMER3 suite) output, extracted the sequence for the each domain matched and arranged the results in decreasing order of sequence length. Only the sequences above the length of 60 residues were considered. The length of the model used was 67.
+\item Duplicate sequences were removed from both the sets using Script \ref{sec: FilterDuplicate}.
+\item A multiple sequence alignment was carried out for both the sets and checked for the presence of the active site serine (Script \ref{sec: CheckS}). The sequences which lacked the active site serine at the aligned position were removed.
+\item Both the sets were merged and again searched for any duplicates resulting in the final set of 10076 sequences.
+\item The filtered set resulted in 16490 sequences which were then further extended by 7 residues on both the ends to ensure they would cover the full length of the models (Script \ref{sec: Extend}). 
+\item The final set of 16490 extended sequences was then scored using both the HMM models and plotted.
+\end{enumerate}
+
+\section{Scripts used in the HMM analysis}
+\label{sec:HMMScripts}
+	\subsection{Script to extract the individual domain sequence matched by stdACP model against the RefSeq database}
+	\label{sec: RefSeqExtract}
+	\lstinputlisting{scripts/extractdomains_refseq_debugged.pl}
+
+	\subsection{Script to extract the individual domain sequence matched by stdACP model against the TrEMBL database}
+	\label{sec: TrEMBLExtract}
+	\lstinputlisting{scripts/extractdomains_trembl_debugged.pl}
+
+	\subsection{Script to eliminate the duplicate sequences}
+	\label{sec: FilterDuplicate}
+	\lstinputlisting{scripts/filter_duplicate.pl}
+
+	\subsection{Script to check for active site serine in the multiple sequence alignment output file}
+	\label{sec: CheckS}
+	\lstinputlisting{scripts/checkS.pl}
+
+	\subsection{Script to extend the sequences on either ends by 7 residues} 
+	\textit{Note: This script was written with the help of Dr. Anthony Haines.}
+	\label{sec: Extend}
+	\lstinputlisting{scripts/extend.pl}
+
+\section{Script to generate the mutant sequences}
+\label{sec:MinChangesScript}
+\lstinputlisting{scripts/minchanges.pl}
+
+\section{Scripts to convert GAFF parameters into Gromacs format}
+\label{sec:gafftogro}
+These scripts were written during the course of the PhD and were used to convert GAFF parameters into Gromacs format in order to integrate the values into the AMBER 99sb-ILDB forcefield parameter databases. 
+
+	\subsection{Script to convert atom type parameters from GAFF to Gromacs format}
+	\label{sec:atomtype}
+	\lstinputlisting{scripts/atomtype.pl}
+
+	\subsection{Script to convert bond length parameters from GAFF to Gromacs format}
+	\label{sec:bondlength}
+	\lstinputlisting{scripts/bonds.pl}
+	
+	\subsection{Script to convert bond angle parameters from GAFF to Gromacs format}
+	\label{sec:bondangle}
+	\lstinputlisting{scripts/angle.pl}	
+
+	\subsection{Script to convert dihedral angle parameters from GAFF to Gromacs format}
+	\label{sec:dihedral}
+	\lstinputlisting{scripts/dihedral.pl}	
+
+	\subsection{Script to convert improper angle parameters from GAFF to Gromacs format}
+	\label{sec:improper}
+	\lstinputlisting{scripts/dihedralimpropers.pl}
+
+	\subsection{Script to convert nonbonded parameters from GAFF to Gromacs format}
+	\label{sec:improper}
+	\lstinputlisting{scripts/nonbonded.pl}	
+
+\section{Script to calculate RMSD using Matt program}
+\label{sec:rmsdMatt}
+	\lstinputlisting{scripts/rmsd_matt.pl}
+	
+\end{singlespacing}
+	

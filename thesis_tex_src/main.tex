@@ -1,0 +1,249 @@
+\RequirePackage{snapshot}
+\documentclass[a4paper, 12pt, oneside]{report}
+%\usepackage[toc,page]{appendix}
+\usepackage[a4paper]{geometry}
+\usepackage[]{nomencl}
+\makenomenclature
+\renewcommand{\nomname}{Abbreviations}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tabu}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{paralist}
+\usepackage{epstopdf}
+\usepackage{appendix}
+\usepackage[font={small,it}, labelfont=bf]{caption}
+\usepackage{soul}
+\usepackage{textcomp}
+\usepackage{tabularx}
+\usepackage{listings}
+\lstset{
+  language=Perl,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+
+% Package and stuff for citation and biliography
+\usepackage[citestyle=authoryear, maxcitenames=2, bibstyle=authoryear, maxbibnames=100, sorting=nyt, doi=false,isbn=false,url=false, eprint=false, backref=true, backend=bibtex]{biblatex}
+\addbibresource{library.bib}
+\AtEveryBibitem{\clearfield{month}} % This is to get rid of the month in the bibliography references
+\renewbibmacro{in:}{} % This is to get rid of the in: in the bibliography references
+
+% To make et al italics
+\renewbibmacro*{name:andothers}{% Based on name:andothers from biblatex.def
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+    {\ifnumgreater{\value{liststop}}{1}
+       {\finalandcomma}
+       {}%
+     \andothersdelim\bibstring[\emph]{andothers}}
+    {}}
+
+% These packages may be useful; if you're getting LaTeX errors such as
+% '! LaTeX Error: File `whatever.sty' not found' then you'll either have to
+% install them or comment them out
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[compact]{titlesec}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{nomencl}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{url}
+\usepackage{float}
+\usepackage{txfonts}
+\usepackage{verbatim}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=-1pt,parsep=-2pt,topsep=3pt}
+\newcommand{\rr}{\raggedright}
+\newcommand{\tn}{\tabularnewline}
+\newcommand{\chaptertwo}{\chapter}
+\newcommand{\bet}{$\beta$}
+
+% Tweak the margins to match requirements. Seems to work OK.
+%\topmargin-0.5cm
+%\footskip1cm
+%\oddsidemargin0.5cm
+%\evensidemargin0cm
+%\textwidth16cm
+%\textheight22cm
+%\vfuzz1pc
+%\hfuzz1pc
+
+\geometry{top=3cm, bottom=3cm, left=3cm,right=2cm}
+\setlength{\LTcapwidth}{\textwidth}
+
+% Tweak chapter headings
+%\newcommand{\scope}[1]{\chapter{#1}}
+%\titleformat{\scope}[display]{\small\center}{Scope of the Thesis}{0pt}{}{}
+%\titleformat{\chaptertwo}[display]{\center}{}{}{}
+\titleformat{\chapter}[display]{\sc\Huge\center}{\chaptername\,\,\thechapter}{0pt}{}{}
+
+%\setlist[description]{labelindent=4.5cm,style=multiline,leftmargin=4.5cm}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+
+\begin{document}
+\doublespacing
+%\setstretch{3}
+
+% Uncomment this if you want space between paragraphs. Doesn't work perfectly.
+%\setlength{\parskip}{0.25in}
+
+% Uncomment this if you want paragraphs to start without an indent.
+%\setlength{\parindent}{0pt}
+
+
+%  T I T L E   P A G E
+
+\begin{titlepage}
+
+	\vspace*{0.1in}
+	\begin{singlespace}
+		\begin{center}
+			\begin{doublespace}
+			{\Huge{\sc{Modelling polyketide synthases and related macromolecular complexes}}}
+			\end{doublespace}
+			\vspace{0.5in}
+			by\\
+			\vspace{0.5in}
+			{\Large{\sc{Rohit Farmer}}}\\
+			\vspace{1.5in}
+			A thesis submitted to\\
+			The University of Birmingham\\
+			for the degree of\\
+			{\sc{Doctor of Philosophy (PhD)}}\\
+		\end{center}
+
+		\vfill
+
+		\hfill
+		\parbox{3in}{College of Life and Environmental Sciences\\
+			School of Biosciences\\
+			The University of Birmingham\\
+			January 2015}
+	\end{singlespace}
+
+\end{titlepage}
+
+%  D E C L A R A T I O N
+
+\pagestyle{plain}
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\input{Declaration.tex}
+
+%  A B S T R A C T
+
+%\pagestyle{plain}
+%\pagenumbering{Roman}
+%\setcounter{page}{1}
+\input{Abstract.tex}
+
+%  D E D I C A T I O N
+
+\clearpage
+\thispagestyle{plain}
+\par\vspace*{.35\textheight}{\centering \textit{This awesome thesis is dedicated to my loving family, amazing friends and the free software community}\par}
+
+%  A C K N O W L E D G E M E N T S
+
+\input{Acknowledgements.tex}
+
+%  C O N T E N T S ,   T A B L E S  ,   F I G U R E S ,   A B B R E V I A T I O N S
+
+\newpage
+
+\begin{singlespace} %Optional singlespacing
+\tableofcontents
+%\addtocontents{toc}{\protect\thispagestyle{empty}}
+
+% Uncomment the following four lines to include a list of figures
+\listoffigures
+%\addtocontents{lof}{\protect\thispagestyle{empty}}
+
+\listoftables
+%\addtocontents{lot}{\protect\thispagestyle{empty}}
+
+\printnomenclature[2cm]
+
+\end{singlespace}
+
+\clearpage
+\pagestyle{plain}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+%  C H A P T E R S
+% Each chapter is in its own file that starts
+% with \chapter{Things And Widgets}
+
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+\input{chapter4.tex}
+\input{chapter5.tex}
+\input{chapter6.tex}
+\input{chapter7.tex}
+
+
+%5begin{comment}
+%  A P P E N D I C E S
+%\appendix
+%\def\chaptername{Appendix}
+%\begin{singlespace}
+
+	% Include any appendix files without their .tex extensions
+	% No, I have no idea why.
+	%\include{appendix}
+%\end{singlespace}
+%\end{comment}
+
+%  R E F E R E N C E S
+
+\renewcommand{\bibname}{List of References}
+\addcontentsline{toc}{chapter}{\quad\,\,{List of References}}
+
+\begin{singlespacing}
+\setlength\bibitemsep{8pt}
+\printbibliography
+\end{singlespacing}
+
+
+	% Include any appendix files without their .tex extensions
+
+\appendix
+%\renewcommand\chaptername{Appendix}
+\input{AppendixI}
+
+\newpage
+\input{AppendixII}
+
+\newpage
+\input{AppendixIII}
+
+\newpage
+\input{AppendixIV}
+
+\end{document}
