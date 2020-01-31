@@ -5,6 +5,7 @@ snapshot
 *.zip
 main.pdf
 *.fuse*
+.Rhistory
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
